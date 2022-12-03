@@ -91,22 +91,14 @@ fn solvePart1(filename: ([:0]const u8)) anyerror!u64 {
     var buf_reader = std.io.bufferedReader(file.reader());
     var stream = buf_reader.reader();
 
-    var rounds = mem.zeroes([2500]Round);
-    var round_count: usize = 0;
-
+    var result: u64 = 0;
     var buf: [1024]u8 = undefined;
     while (try stream.readUntilDelimiterOrEof(&buf, '\n')) |line| {
         if (line.len != 3) continue;
-        rounds[round_count].opponent = try parseMove(line[0]);
-        rounds[round_count].myself = try parseMove(line[2]);
-        round_count = round_count + 1;
-    }
-
-    var result: u64 = 0;
-    var i: usize = 0;
-    while (i < round_count) {
-        result += roundScore(rounds[i]);
-        i += 1;
+        var round: Round = undefined;
+        round.opponent = try parseMove(line[0]);
+        round.myself = try parseMove(line[2]);
+        result += roundScore(round);
     }
 
     return result;
@@ -119,24 +111,15 @@ fn solvePart2(filename: ([:0]const u8)) anyerror!u64 {
     var buf_reader = std.io.bufferedReader(file.reader());
     var stream = buf_reader.reader();
 
-    var rounds = mem.zeroes([2500]Round);
-    var round_count: usize = 0;
-
+    var result: u64 = 0;
     var buf: [1024]u8 = undefined;
     while (try stream.readUntilDelimiterOrEof(&buf, '\n')) |line| {
         if (line.len != 3) continue;
-        rounds[round_count].opponent = try parseMove(line[0]);
-        rounds[round_count].expected_outcome = try parseOutcome(line[2]);
-        round_count = round_count + 1;
-    }
-
-    var result: u64 = 0;
-    var i: usize = 0;
-    while (i < round_count) {
-        var round = &rounds[i];
+        var round: Round = undefined;
+        round.opponent = try parseMove(line[0]);
+        round.expected_outcome = try parseOutcome(line[2]);
         round.myself = getMove(round.opponent, round.expected_outcome);
-        result += roundScore(rounds[i]);
-        i += 1;
+        result += roundScore(round);
     }
 
     return result;
