@@ -19,7 +19,7 @@ pub fn main() !void {
     print("Result: {d}\n", .{result});
 }
 
-pub fn solvePart1(filename: ([:0]const u8)) anyerror!u64 {
+pub fn solvePart1(filename: ([:0]const u8)) !u64 {
     var file = try fs.cwd().openFile(filename, .{});
     defer file.close();
 
@@ -47,7 +47,7 @@ pub fn solvePart1(filename: ([:0]const u8)) anyerror!u64 {
     return max;
 }
 
-pub fn solvePart2(filename: ([:0]const u8)) anyerror!u64 {
+pub fn solvePart2(filename: ([:0]const u8)) !u64 {
     var file = try fs.cwd().openFile(filename, .{});
     defer file.close();
 
@@ -81,23 +81,23 @@ pub fn solvePart2(filename: ([:0]const u8)) anyerror!u64 {
 test "part_1_test" {
     const filename = "data/input-test-1";
     const result: u64 = try solvePart1(filename);
-    try testing.expectEqual(result, 24000);
+    try testing.expectEqual(@as(u64, 24000), result);
 }
 
 test "part_1" {
     const filename = "data/input-1";
     const result: u64 = try solvePart1(filename);
-    try testing.expectEqual(result, 68923);
+    try testing.expectEqual(@as(u64, 68923), result);
 }
 
 test "part_2_test" {
     const filename = "data/input-test-1";
     const result: u64 = try solvePart2(filename);
-    try testing.expectEqual(result, 45000);
+    try testing.expectEqual(@as(u64, 45000), result);
 }
 
 test "part_2" {
     const filename = "data/input-1";
     const result: u64 = try solvePart2(filename);
-    try testing.expectEqual(result, 200044);
+    try testing.expectEqual(@as(u64, 200044), result);
 }

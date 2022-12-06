@@ -102,23 +102,23 @@ fn solve(filename: ([:0]const u8), op: Operation) !u64 {
 test "part_1_test" {
     const filename = "data/input-test-4";
     const result: u64 = try solve(filename, Operation.Contains);
-    try testing.expectEqual(result, 2);
+    try testing.expectEqual(@as(u64, 2), result);
 }
 
 test "part_1" {
     const filename = "data/input-4";
     const result: u64 = try solve(filename, Operation.Contains);
-    try testing.expectEqual(result, 511);
+    try testing.expectEqual(@as(u64, 511), result);
 }
 
 test "part_2_test" {
     const filename = "data/input-test-4";
     const result: u64 = try solve(filename, Operation.Overlaps);
-    try testing.expectEqual(result, 4);
+    try testing.expectEqual(@as(u64, 4), result);
 }
 
 test "part_2" {
     const filename = "data/input-4";
     const result: u64 = try solve(filename, Operation.Overlaps);
-    try testing.expectEqual(result, 821);
+    try testing.expectEqual(@as(u64, 821), result);
 }
